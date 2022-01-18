@@ -37,4 +37,18 @@ public class ValoresModelo {
             return null;
         }
     }
+    public int eliminarRegistroSQL(int id){
+        Connection con;
+        try {
+            con = Conexion.getConnection();
+            String sentencia = "DELETE tbValores WHERE idvalor = ?";
+            ps = con.prepareStatement(sentencia);
+            ps.setInt(1, id);
+            ps.execute();
+            return 1;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+            return 0;
+        }
+    }
 }
