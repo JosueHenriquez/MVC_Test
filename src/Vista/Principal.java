@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Principal extends javax.swing.JFrame {
+public final class Principal extends javax.swing.JFrame {
     DefaultTableModel modelo;
     
     public Principal() {
@@ -87,6 +87,11 @@ public class Principal extends javax.swing.JFrame {
         BtnModificar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         BtnModificar.setText("Modificar");
         BtnModificar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        BtnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnModificarActionPerformed(evt);
+            }
+        });
 
         txtidvalor.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtidvalor.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +152,6 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -163,6 +167,7 @@ public class Principal extends javax.swing.JFrame {
         if (respuesta == 1) {
             JOptionPane.showMessageDialog(null, "Dato registrado");
             CargarTabla();
+            LimpiarCampos();
         }else{
             JOptionPane.showMessageDialog(null, "Dato no registrado");
         }
@@ -186,10 +191,24 @@ public class Principal extends javax.swing.JFrame {
         if (respuesta == 1) {
             JOptionPane.showMessageDialog(null, "Registro eliminado");
             CargarTabla();
+            LimpiarCampos();
         }else{
             JOptionPane.showMessageDialog(null, "Registro no pudo ser eliminado");
         }
     }//GEN-LAST:event_BtnEliminarActionPerformed
+
+    private void BtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModificarActionPerformed
+        objController.setIdvalor(Integer.parseInt(txtidvalor.getText()));
+        objController.setValor(Integer.parseInt(txtvalor.getText()));
+        int respuesta = objController.actualizarRegistroSQLController();
+        if (respuesta == 1) {
+            JOptionPane.showMessageDialog(null, "Registro actualizado");
+            CargarTabla();
+            LimpiarCampos();
+        }else{
+            JOptionPane.showMessageDialog(null, "Registro no pudo ser actualizado");
+        }
+    }//GEN-LAST:event_BtnModificarActionPerformed
 
     public void CargarTabla(){
         while (modelo.getRowCount()>0) {
@@ -205,6 +224,11 @@ public class Principal extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
         }
+    }
+    
+    public void LimpiarCampos(){
+        txtidvalor.setText("");
+        txtvalor.setText("");
     }
     
     public static void main(String args[]) {

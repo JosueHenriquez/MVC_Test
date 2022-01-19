@@ -58,4 +58,9 @@ public class ValoresController {
         int dato = objModelo.eliminarRegistroSQL(idvalor);
         return dato;
     }
+    
+    public int actualizarRegistroSQLController(){
+        int dato = objModelo.actualizarRegistroSQL(idvalor,valor);
+        return dato;
+    }
 }
